@@ -1,0 +1,14 @@
+<!-- TODO: Add Loading spinner -->
+<div *ngIf="imagesList.length > 0">
+    <cdk-virtual-scroll-viewport class="block-list-num" itemSize="50">
+        <div  class="block-num" *cdkVirtualFor="let image of imagesList">
+            <span>{{ image.name }}</span>
+        </div>
+    </cdk-virtual-scroll-viewport> 
+</div>
+<div *ngIf="imagesList.length === 0">cargando imagenes...</div>
+
+
+
+
+
