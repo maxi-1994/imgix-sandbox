@@ -2,3 +2,16 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+$main-color: #212B32;
+$light-blue-color: #00C0FA;
+$orange-color: #F8510F;
+$white-color: #FFF;
+$black-color: #000;
+
+html { font-size: 18px; }
+
+body {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}

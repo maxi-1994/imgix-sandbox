@@ -10,4 +10,8 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent {
 
+  onAddNewOperation(): void {
+    console.log('Add new operarion to the sandbox');
+  }
+
 }

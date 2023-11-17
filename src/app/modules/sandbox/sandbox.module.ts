@@ -13,13 +13,14 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { VirtualScrollerComponent } from 'src/app/shared/virtual-scroller/virtual-scroller.component';
 
+
 const sandboxRoutes: Routes = [
   { 
     path: '', 
     component: SandboxContentComponent, 
     children: [
       { path: '', component: ImageSelectorComponent },
-      { path: 'editor', component: SandboxEditorComponent },
+      { path: 'editor/:id', component: SandboxEditorComponent },
     ]
   },
 ];
@@ -28,7 +29,7 @@ const sandboxRoutes: Routes = [
   declarations: [
     SandboxContentComponent,
     ImageSelectorComponent,
-    SandboxEditorComponent
+    SandboxEditorComponent,
   ],
   imports: [
     CommonModule,
