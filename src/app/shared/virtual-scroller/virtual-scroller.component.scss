@@ -1,32 +1,36 @@
 .block-list {
     min-height: 700px;
+
+    a { text-decoration: none; }
+
+    .card {
+        min-height: 50%;
+        margin-bottom: 5px;
+        padding: 10px;
+        text-align: center;
+        font-size: 24px;
+        border: 1px solid #000;
+        background: transparent;
+        filter: brightness(40%);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+    
+        &:hover {
+            cursor: pointer;
+            filter: brightness(100%);
+            -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        }
+    
+        img {
+            width: 100%;
+            min-height: 300px;
+            object-fit: cover;
+        }
+    }
+    
 }
  
-.card {
-    min-height: 50%;
-    margin-bottom: 5px;
-    padding: 10px;
-    text-align: center;
-    font-size: 24px;
-    border: 1px solid #000;
-    background: transparent;
-    filter: brightness(40%);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        cursor: pointer;
-        filter: brightness(100%);
-        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    }
-
-    img {
-        width: 100%;
-        min-height: 300px;
-        object-fit: cover;
-    }
-}
 
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { Iimages } from 'src/app/core/models/images';
+import { CACHE_KEY } from '../constants/localstorage-keys.constants';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ImagesService {
   constructor(private http: HttpClient) { }
 
   getAllImages(): Observable<Iimages[]> {
-    const cacheKey: string = 'cachedImages';
+    const cacheKey: string = CACHE_KEY;
     const cachedImagesString = localStorage.getItem(cacheKey);
 
     if(cachedImagesString) {
@@ -34,6 +35,5 @@ export class ImagesService {
           })
         );
     }
-  
   }
 }

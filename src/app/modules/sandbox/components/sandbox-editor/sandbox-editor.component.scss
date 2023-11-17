@@ -1,0 +1,15 @@
+// @import '../../../../../styles.scss';
+
+.image-wrapper {
+    max-width: 600px;
+    height: 600px;
+    overflow: hidden; 
+    margin: 20px auto 0;
+}
+
+.imagen {
+    width: 100%;  
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
