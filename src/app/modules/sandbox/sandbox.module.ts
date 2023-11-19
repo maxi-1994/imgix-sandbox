@@ -36,7 +36,7 @@ const sandboxRoutes: Routes = [
     RouterModule.forChild(sandboxRoutes),
     HeaderComponent,
     SidebarComponent,
-    VirtualScrollerComponent,
+    VirtualScrollerComponent
   ]
 })
 export class SandboxModule { }

@@ -1,0 +1,25 @@
+<div class="operation-input-wrapper">
+    <input
+        id="typeahead-focus"
+        type="text"
+        class="form-control"
+        placeholder="Select operation"
+        [(ngModel)]="selectedParam"
+        (ngModelChange)="onSearchTextChanged($event)"
+        [ngbTypeahead]="search"
+        [inputFormatter]="formatter"
+        [resultFormatter]="formatter"
+        (focus)="focus$.next($any($event).target.value)"
+        (click)="click$.next($any($event).target.value)"
+        #paramsSearcher="ngbTypeahead"
+    />
+    <input 
+        type="text" 
+        name="possibleValues" 
+        id="possibleValues" 
+        placeholder="{{ paramPlaceholder }}"
+        [(ngModel)]="selectedValue"
+        (ngModelChange)="onInputValueChanged()"
+        style="width: 380px;"
+    />
+</div>

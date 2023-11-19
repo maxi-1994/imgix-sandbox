@@ -36,4 +36,9 @@
         background-color: var(--li-hover-color);
         background-size: 100% 5% !important;
     }
+
+    ::ng-deep .dropdown-menu {
+        max-height: 300px;
+        overflow: scroll;
+    }
 }

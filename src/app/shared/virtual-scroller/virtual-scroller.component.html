@@ -1,20 +1,23 @@
 
 <!--TODO: Add style to the scroll bar-->
 <div *ngIf="imagesList.length > 0">
-    <cdk-virtual-scroll-viewport class="block-list" itemSize="50">
-        <div class="row">
-            <div class="col-sm-2 mt-2" *ngFor="let image of imagesList">
-                <a routerLink="/sandbox/editor/{{ image.name | removeImgExtension }}">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ image.url }}" alt="{{ image.name | removeImgExtension }}" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ image.name | removeImgExtension }}</h5>
-                        </div>
+    <!-- <cdk-virtual-scroll-viewport class="block-list" itemSize="50">
+
+    </cdk-virtual-scroll-viewport>  -->
+    
+    <!-- TODO: OPTIMIZAR IMAGENES -->
+    <div class="row block-list">
+        <div class="col-sm-2 mt-2" *ngFor="let image of imagesList">
+            <a routerLink="/sandbox/editor/{{ image.name | removeImgExtension }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ image.url }}" alt="{{ image.name | removeImgExtension }}" loading="lazy">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ image.name | removeImgExtension }}</h5>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
-    </cdk-virtual-scroll-viewport> 
+    </div>
 </div>
 
 
