@@ -16,6 +16,7 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
   public builtUrl: string;
 
   private paramSubscription: Subscription;
+  private removeParamSubscriptrion: Subscription;
 
   accumulatedParams: string[] = [];
 
@@ -26,6 +27,7 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
   }
 
   getImageFromCache(): string {
+    //TODO: Optimizar esto
     this.route.paramMap.subscribe(params => {
       this.imgId = params.get('id') ?? '';
     });
@@ -34,15 +36,35 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
 
     if(cachedImagesString) {
       const cachedImages = JSON.parse(cachedImagesString) as Iimages[];
-      this.imgToEdit = cachedImages.find(i => i.name.includes(this.imgId));
+      this.imgToEdit = cachedImages.find(image => image.name.includes(this.imgId));
 
       this.paramSubscription = this.parametersService.imgParamShared
         .pipe(debounceTime(1000))
         .subscribe(params => {
-          // TODO: Si el param ya esta agregado, solo cambiarle el valor, no volver a agregar un repetido
-          this.accumulatedParams.push(params);
-          return this.builtUrl = this.buildImageUrl();
+           // Buscar si el parámetro ya existe en accumulatedParams
+            const existingParamIndex = this.accumulatedParams.findIndex(p => p.startsWith(params.split('=')[0]));
+
+            if (existingParamIndex !== -1) {
+              // Si el parámetro ya existe, actualizar su valor
+              this.accumulatedParams[existingParamIndex] = params;
+            } else {
+              // Si el parámetro no existe, lo agregarlo
+              this.accumulatedParams.push(params);
+            }
+
+            return this.builtUrl = this.buildImageUrl();
         });
+
+      this.removeParamSubscriptrion = this.parametersService.imgParamToRemove.subscribe(paramToRemove => {
+        const existingParamIndexToRemove = this.accumulatedParams.findIndex(p => p.startsWith(paramToRemove.split('=')[0]));
+
+        if(existingParamIndexToRemove !== -1) {
+          this.accumulatedParams.splice(existingParamIndexToRemove, 1);
+        }
+
+        return this.buildImageUrl();
+
+      });
     }
 
     return 'No image found';
@@ -53,11 +75,12 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
     if (this.accumulatedParams.length > 0) {
       console.log(this.accumulatedParams);
 
+      // TODO: Generar un historial con localStorage
       let url = `${this.imgToEdit.url}?${this.accumulatedParams.join('&')}`;
       console.log(url);
       return url;
     } else {
-      // Si no hay parámetros, retornar la URL base
+      // Si no hay parámetros retornar la URL base
       return this.imgToEdit.url;
     }
   }

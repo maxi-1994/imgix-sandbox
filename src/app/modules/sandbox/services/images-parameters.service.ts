@@ -7,13 +7,19 @@ import { IimgParams } from 'src/app/core/models/imgparams';
   providedIn: 'root'
 })
 export class ImagesParametersService {
+  // TODO: Mover a CORE e UNIFICAR con el servicio de imagenes
   private baseURL: string = 'https://sandbox.imgix.com/';
   private parametersEndpoint: string = 'assets/parameters.json';
 
   private imgParamSharedEvent = new BehaviorSubject('');
+  private imgParamToRemoveEvent = new BehaviorSubject('');
 
   public get imgParamShared(): BehaviorSubject<string> {
     return this.imgParamSharedEvent;
+  }
+
+  public get imgParamToRemove(): BehaviorSubject<string> {
+    return this.imgParamToRemoveEvent;
   }
 
   constructor(private http: HttpClient) { }

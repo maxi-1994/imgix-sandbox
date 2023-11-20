@@ -16,6 +16,8 @@ export class OperationInputComponent implements OnChanges {
   // TODO: Crear INTERFACES
   @ViewChild('paramsSearcher', { static: true }) public paramsSearcher: NgbTypeahead;
   @Output() inputValueChanged = new EventEmitter<string>();
+  @Output() inputToRemove = new EventEmitter<string>();
+  @Input() public paramsList: any;
 
   public focus$ = new Subject<string>();
 	public click$ = new Subject<string>();
@@ -24,12 +26,11 @@ export class OperationInputComponent implements OnChanges {
 
   public selectedParam: any;
   public selectedValue: any;
+  @Input() public selectedForUrl: any;
   public paramPlaceholder: string;
 
-  @Input() public paramsList: any;
-
   ngOnChanges(changes: SimpleChanges): void {
-    const paramsList = changes['paramsList'].currentValue
+    const paramsList = changes['paramsList'].currentValue;
     this.setParamsSearcher(paramsList);
   }
 
@@ -79,8 +80,12 @@ export class OperationInputComponent implements OnChanges {
   }
 
   onInputValueChanged(): void {
-    const paramValue: string = `${this.selectedParam.key}=${this.selectedValue}`;
-    this.inputValueChanged.emit(paramValue);
+    this.selectedForUrl = `${this.selectedParam.key}=${this.selectedValue}`;
+    this.inputValueChanged.emit(this.selectedForUrl);
+  }
+
+  onRemoveInputValue(): void {
+    this.inputToRemove.emit(this.selectedForUrl)
   }
 
 }

@@ -14,6 +14,8 @@ import { RemoveImgExtensionPipe } from 'src/app/core/pipes/remove-img-extension.
   standalone: true,
   imports: [ScrollingModule, CommonModule, RemoveImgExtensionPipe, RouterModule],
 })
+
+// TODO: Cambiar nombre a "image-selector" y optimizar imagenes
 export class VirtualScrollerComponent implements OnInit {
   public imagesList: Iimages[];
 
