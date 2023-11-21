@@ -13,7 +13,7 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
   styleUrls: ['./operation-input.component.scss']
 })
 export class OperationInputComponent implements OnChanges {
-  // TODO: Crear INTERFACES
+  // TODO: Create interfaces
   @ViewChild('paramsSearcher', { static: true }) public paramsSearcher: NgbTypeahead;
   @Output() inputValueChanged = new EventEmitter<string>();
   @Output() inputToRemove = new EventEmitter<string>();
@@ -35,7 +35,6 @@ export class OperationInputComponent implements OnChanges {
   }
 
   setParamsSearcher(params: any): void {
-    // Agregar debunce time cuando se tipea
     this.formatter = (params: any) => params.key;
     this.search = (text$: Observable<string>) => {
       const debouncedText$ = text$.pipe(debounceTime(500), distinctUntilChanged());
@@ -45,13 +44,13 @@ export class OperationInputComponent implements OnChanges {
       return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$)
       .pipe(
         map((textValue) =>
-          (textValue === '' ? params : params.filter((v: any) => v.key.toLowerCase().indexOf(textValue.toLowerCase()) > -1)), // .slice(0, 20) -> muestro solo 20 resultados
+          (textValue === '' ? params : params.filter((v: any) => v.key.toLowerCase().indexOf(textValue.toLowerCase()) > -1)),
         ));
     };
   }
 
   onSearchTextChanged(paramSelected: any): void {
-    //TODO: Optimizar esto
+    //TODO: Optimize
     if(paramSelected.expects[0].type === 'integer' || paramSelected.expects[0].type === 'ratio') {
       if(paramSelected.expects[0].strict_range) {
         this.paramPlaceholder = `Is a integer - min: ${paramSelected.expects[0].strict_range.min} - max: ${paramSelected.expects[0].strict_range.max}`;

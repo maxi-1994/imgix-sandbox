@@ -12,7 +12,7 @@ import { ImagesParametersService } from 'src/app/modules/sandbox/services/images
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements AfterViewInit {
-  // TODO: Crear INTERFACES
+  // TODO: Create intefaces
   public paramsList: any;
 
   public operationInputList: any[] = [];
@@ -26,7 +26,6 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   onAddNewOperation(): void {
-    console.log('Add new operarion to the sandbox');
     this.operationInputList.push({});
   }
 

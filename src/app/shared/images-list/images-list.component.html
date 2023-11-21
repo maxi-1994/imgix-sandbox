@@ -1,11 +1,6 @@
 
-<!--TODO: Add style to the scroll bar-->
 <div *ngIf="imagesList.length > 0">
-    <!-- <cdk-virtual-scroll-viewport class="block-list" itemSize="50">
-
-    </cdk-virtual-scroll-viewport>  -->
-    
-    <!-- TODO: OPTIMIZAR IMAGENES -->
+    <!-- TODO: optimize image loading -->
     <div class="row block-list">
         <div class="col-sm-2 mt-2" *ngFor="let image of imagesList">
             <a routerLink="/sandbox/editor/{{ image.name | removeImgExtension }}">

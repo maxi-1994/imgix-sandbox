@@ -1,23 +1,24 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';;
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';;
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { RouterModule } from '@angular/router';
 import { ImagesService } from 'src/app/core/services/images.service';
 import { Iimages } from 'src/app/core/models/images';
 import { RemoveImgExtensionPipe } from 'src/app/core/pipes/remove-img-extension.pipe';
+import { Subscription } from 'rxjs';
+
 
 @Component({
-  selector: 'app-virtual-scroller',
-  templateUrl: './virtual-scroller.component.html',
-  styleUrls: ['./virtual-scroller.component.scss'],
+  selector: 'app-images-list',
+  templateUrl: './images-list.component.html',
+  styleUrls: ['./images-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ScrollingModule, CommonModule, RemoveImgExtensionPipe, RouterModule],
 })
-
-// TODO: Cambiar nombre a "image-selector" y optimizar imagenes
-export class VirtualScrollerComponent implements OnInit {
+export class ImagesListComponent implements OnInit, OnDestroy {
   public imagesList: Iimages[];
+  private imagesSubscription: Subscription;
 
   constructor(private imagesService: ImagesService) {}
 
@@ -26,8 +27,12 @@ export class VirtualScrollerComponent implements OnInit {
   }
 
   getAllImages(): void {
-    this.imagesService.getAllImages().subscribe((images: Iimages[]) => {
+    this.imagesSubscription = this.imagesService.getAllImages().subscribe((images: Iimages[]) => {
       this.imagesList = images;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.imagesSubscription.unsubscribe();
   }
 }

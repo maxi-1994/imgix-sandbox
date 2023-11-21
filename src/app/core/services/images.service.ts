@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { Iimages } from 'src/app/core/models/images';
-import { CACHE_KEY } from '../constants/localstorage-keys.constants';
+import { CACHE_KEY, imgBaseURL, getAllImgEndpoint } from '../constants/localstorage-keys.constants';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagesService {
-  //TODO: Create constants for the URL's
-  private baseURL: string = 'https://storage.googleapis.com/';
-  private imagesEndpoint: string = 'nanlabs-engineering-technical-interviews/imgix-samples-list.json';
+  private baseURL: string = imgBaseURL;
+  private imagesEndpoint: string = getAllImgEndpoint;
 
   constructor(private http: HttpClient) { }
 

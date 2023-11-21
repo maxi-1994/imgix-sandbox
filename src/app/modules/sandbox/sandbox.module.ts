@@ -11,7 +11,7 @@ import { SandboxEditorComponent } from './components/sandbox-editor/sandbox-edit
 // Shared Components
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
-import { VirtualScrollerComponent } from 'src/app/shared/virtual-scroller/virtual-scroller.component';
+import { ImagesListComponent } from 'src/app/shared/images-list/images-list.component';
 
 
 const sandboxRoutes: Routes = [
@@ -36,7 +36,7 @@ const sandboxRoutes: Routes = [
     RouterModule.forChild(sandboxRoutes),
     HeaderComponent,
     SidebarComponent,
-    VirtualScrollerComponent
+    ImagesListComponent
   ]
 })
 export class SandboxModule { }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VirtualScrollerComponent } from './virtual-scroller.component';
+import { ImagesListComponent } from './images-list.component';
 
-describe('VirtualScrollerComponent', () => {
-  let component: VirtualScrollerComponent;
-  let fixture: ComponentFixture<VirtualScrollerComponent>;
+describe('ImagesListComponent', () => {
+  let component: ImagesListComponent;
+  let fixture: ComponentFixture<ImagesListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ VirtualScrollerComponent ]
+      imports: [ ImagesListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VirtualScrollerComponent);
+    fixture = TestBed.createComponent(ImagesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
