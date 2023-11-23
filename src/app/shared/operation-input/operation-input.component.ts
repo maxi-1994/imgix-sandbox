@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { IParameters } from 'src/app/core/models/imgparams';
 
 @Component({
   selector: 'app-operation-input',
@@ -13,29 +14,28 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
   styleUrls: ['./operation-input.component.scss']
 })
 export class OperationInputComponent implements OnChanges {
-  // TODO: Create interfaces
   @ViewChild('paramsSearcher', { static: true }) public paramsSearcher: NgbTypeahead;
   @Output() inputValueChanged = new EventEmitter<string>();
   @Output() inputToRemove = new EventEmitter<string>();
-  @Input() public paramsList: any;
+  @Input() public paramsList: IParameters[];
+  @Input() public selectedForUrl: string;
 
   public focus$ = new Subject<string>();
 	public click$ = new Subject<string>();
-  public search: OperatorFunction<string, readonly string[]>
+  public search: OperatorFunction<string, readonly IParameters[]>
   public formatter: any;
 
-  public selectedParam: any;
-  public selectedValue: any;
-  @Input() public selectedForUrl: any;
+  public selectedParam: IParameters;
+  public selectedValue: string;
   public paramPlaceholder: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    const paramsList = changes['paramsList'].currentValue;
+    const paramsList: IParameters[] = changes['paramsList'].currentValue;
     this.setParamsSearcher(paramsList);
   }
 
-  setParamsSearcher(params: any): void {
-    this.formatter = (params: any) => params.key;
+  setParamsSearcher(params: IParameters[]): void {
+    this.formatter = (params: IParameters) => params.key;
     this.search = (text$: Observable<string>) => {
       const debouncedText$ = text$.pipe(debounceTime(500), distinctUntilChanged());
       const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.paramsSearcher.isPopupOpen()));
@@ -43,38 +43,44 @@ export class OperationInputComponent implements OnChanges {
 
       return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$)
       .pipe(
-        map((textValue) =>
-          (textValue === '' ? params : params.filter((v: any) => v.key.toLowerCase().indexOf(textValue.toLowerCase()) > -1)),
+        map((textValue: string) =>
+          (textValue === '' ? params : params.filter((v: IParameters) => v.key.toLowerCase().indexOf(textValue.toLowerCase()) > -1)),
         ));
     };
   }
 
-  onSearchTextChanged(paramSelected: any): void {
-    //TODO: Optimize
-    if(paramSelected.expects[0].type === 'integer' || paramSelected.expects[0].type === 'ratio') {
-      if(paramSelected.expects[0].strict_range) {
-        this.paramPlaceholder = `Is a integer - min: ${paramSelected.expects[0].strict_range.min} - max: ${paramSelected.expects[0].strict_range.max}`;
+  onSearchTextChanged(paramSelected: IParameters): void {
+    console.log(paramSelected);
+    const paramExpects = paramSelected.expects[0];
+
+    if (paramExpects) {
+      switch (paramExpects.type) {
+        case 'integer':
+        case 'ratio':
+          if (paramExpects.strict_range) {
+            this.paramPlaceholder = `Is an integer - min: ${paramExpects.strict_range.min || '-'} - max: ${paramExpects.strict_range.max || '-'}`;
+          } else if (paramExpects.suggested_range) {
+            this.paramPlaceholder = `Is an integer - min: ${paramExpects.suggested_range.min || '-'} - max: ${paramExpects.suggested_range.max || '-'}`;
+          } else if (paramExpects.possible_values) {
+            this.paramPlaceholder = paramExpects.possible_values;
+          }
+          break;
+  
+        case 'hex_color':
+          this.paramPlaceholder = 'A hex color (e.g. fff) or a color keyword (e.g "red")';
+          break;
+  
+        case 'list':
+        case 'string':
+          if (paramExpects.possible_values) {
+            this.paramPlaceholder = paramExpects.possible_values;
+          }
+          break;
+  
+        case 'number':
+          this.paramPlaceholder = 'A number (e.g. 42)';
+          break;
       }
-
-      if(paramSelected.expects[0].suggested_range) { 
-        this.paramPlaceholder = `Is a integer - min: ${paramSelected.expects[0].suggested_range.min} - max: ${paramSelected.expects[0].suggested_range.max ? paramSelected.expects[0].suggested_range.max : '-'}`;
-      }
-
-      if(paramSelected.expects[0].possible_values) {
-        this.paramPlaceholder = paramSelected.expects[0].possible_values;
-      }
-    }
-
-    if(paramSelected.expects[0].type === 'hex_color') {
-      this.paramPlaceholder = 'A hex color (e.g. fff) or a color keyboard (e.g "red")';
-    }
-
-    if(paramSelected.expects[0].type === 'list' || paramSelected.expects[0].type === 'string') {
-      this.paramPlaceholder = paramSelected.expects[0].possible_values;
-    }
-
-    if(paramSelected.expects[0].type === 'number') {
-      this.paramPlaceholder = 'A number (e.g. 42)';
     }
   }
 

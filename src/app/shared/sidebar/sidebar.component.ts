@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OperationInputComponent } from '../operation-input/operation-input.component';
 import { ImagesParametersService } from 'src/app/modules/sandbox/services/images-parameters.service';
+import { IParameters } from 'src/app/core/models/imgparams';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,20 +13,22 @@ import { ImagesParametersService } from 'src/app/modules/sandbox/services/images
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements AfterViewInit {
-  // TODO: Create intefaces
-  public paramsList: any;
-
-  public operationInputList: any[] = [];
+export class SidebarComponent implements AfterViewInit, OnDestroy {
+  public paramList: IParameters[];
+  public operationInputList: Array<{}> = [];
+  private paramListSubscription: Subscription;
 
   constructor(private parametersService: ImagesParametersService) {}
   
   ngAfterViewInit(): void {
-    this.parametersService.getAllImagesParameters().subscribe(params => {
-      this.paramsList = params;
-    });
+    this.setParamList();
   }
 
+  setParamList(): void {
+    this.paramListSubscription = 
+      this.parametersService.getAllImagesParameters().subscribe(params => this.paramList = params);
+  }
+  
   onAddNewOperation(): void {
     this.operationInputList.push({});
   }
@@ -33,9 +37,13 @@ export class SidebarComponent implements AfterViewInit {
     this.parametersService.imgParamShared.next(paramValue);
   }
   
-  onRemoveInputValue(ValueToRemove: string, index: any): void {
+  onRemoveInputValue(ValueToRemove: string, index: number): void {
     this.operationInputList.splice(index, 1);
     this.parametersService.imgParamToRemove.next(ValueToRemove);
+  }
+  
+  ngOnDestroy(): void {
+    this.paramListSubscription.unsubscribe();
   }
 
 }

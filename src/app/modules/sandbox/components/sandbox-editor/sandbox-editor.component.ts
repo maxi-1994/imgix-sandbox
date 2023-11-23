@@ -67,10 +67,10 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
           this.accumulatedParams.splice(existingParamIndexToRemove, 1);
         }
     
-        return this.buildImageUrl();
+        return this.builtURL = this.buildImageUrl();
       });
 
-    return this.buildImageUrl();;
+    return this.builtURL = this.buildImageUrl();
   }
 
   buildImageUrl(): string {
