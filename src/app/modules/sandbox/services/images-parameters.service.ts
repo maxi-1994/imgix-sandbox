@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, BehaviorSubject } from 'rxjs';
 import { IParameters, IParametersResponse } from 'src/app/core/models/imgparams';
-import { paramsBaseURL, getAllParamsEndpoint } from 'src/app/core/constants/localstorage-keys.constants';
+import { getAllParamsEndpoint, paramsBaseURL } from 'src/app/core/constants/urls.constants';
 
 
 @Injectable({

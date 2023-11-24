@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
@@ -9,7 +10,7 @@ import { IParameters } from 'src/app/core/models/imgparams';
 @Component({
   selector: 'app-operation-input',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbTypeaheadModule],
+  imports: [CommonModule, FormsModule, NgbTypeaheadModule, NgbTooltipModule],
   templateUrl: './operation-input.component.html',
   styleUrls: ['./operation-input.component.scss']
 })
@@ -28,6 +29,7 @@ export class OperationInputComponent implements OnChanges {
   public selectedParam: IParameters;
   public selectedValue: string;
   public paramPlaceholder: string;
+  public paramDescription: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     const paramsList: IParameters[] = changes['paramsList'].currentValue;
@@ -50,7 +52,7 @@ export class OperationInputComponent implements OnChanges {
   }
 
   onSearchTextChanged(paramSelected: IParameters): void {
-    console.log(paramSelected);
+    this.paramDescription = paramSelected.short_description;
     const paramExpects = paramSelected.expects[0];
 
     if (paramExpects) {

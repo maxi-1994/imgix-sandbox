@@ -76,7 +76,21 @@ export class SandboxEditorComponent implements OnInit, OnDestroy {
   buildImageUrl(): string {
     if (this.accumulatedParams.length > 0) {
       // TODO: Create history in localStorage
-      const url = `${this.imgToEdit.url}?${this.accumulatedParams.join('&')}`;
+
+      // TODO: VER TEMA URL, DEBE SER RELATIVA, NO ABSOLUTA
+
+      const ultimaBarra = this.imgToEdit.url.lastIndexOf("/");
+      let parteDeseada = '';
+      let url = '';
+      if (ultimaBarra !== -1) {
+        parteDeseada = this.imgToEdit.url.substring(ultimaBarra + 1);
+        url = `${parteDeseada}?${this.accumulatedParams.join('&')}`
+      } else {
+        console.log("La URL no contiene barras");url
+        url = '';
+      }
+      console.log(url);
+      // const url = `${this.imgToEdit.url}?${this.accumulatedParams.join('&')}`;
       return url;
     } else {
       return this.imgToEdit.url;

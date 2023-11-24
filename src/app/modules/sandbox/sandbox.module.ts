@@ -1,6 +1,6 @@
 // Modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage, provideImgixLoader } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
@@ -12,7 +12,6 @@ import { SandboxEditorComponent } from './components/sandbox-editor/sandbox-edit
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { SidebarComponent } from 'src/app/shared/sidebar/sidebar.component';
 import { ImagesListComponent } from 'src/app/shared/images-list/images-list.component';
-
 
 const sandboxRoutes: Routes = [
   { 
@@ -34,9 +33,13 @@ const sandboxRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(sandboxRoutes),
+    NgOptimizedImage,
     HeaderComponent,
     SidebarComponent,
     ImagesListComponent
-  ]
+  ],
+  providers: [
+    provideImgixLoader('https://assets.imgix.net/unsplash/'),
+  ],
 })
 export class SandboxModule { }

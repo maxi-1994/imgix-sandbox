@@ -1,5 +1,6 @@
 <div class="editor-wrapper">
     <div class="image-wrapper">
-        <img class="img-fluid" [src]="builtURL" alt="{{ imgToEdit.name }}"/>
+        <img class="img-fluid fadeIn-animation" ngSrc="{{ builtURL }}" alt="{{ imgToEdit.name }}" width="400" height="200" priority/>
+        <p>{{ builtURL }}</p>
     </div>
 </div>

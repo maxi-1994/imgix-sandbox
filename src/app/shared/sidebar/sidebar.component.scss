@@ -1,8 +1,9 @@
 @import '../../../styles.scss';
 
 .left-sidebar {
-    width: 240px;
-    height: 100%;
+    width: 400px;
+    height: 100vh;
+    overflow-y: auto;
     z-index: 20;
     background: $main-color;
     -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
@@ -33,12 +34,7 @@
     }
 
     .active {
-        background-color: var(--li-hover-color);
+        background-color: $orange-color;
         background-size: 100% 5% !important;
-    }
-
-    ::ng-deep .dropdown-menu {
-        max-height: 300px;
-        overflow: scroll;
     }
 }

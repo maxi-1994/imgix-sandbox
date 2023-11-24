@@ -1,0 +1,70 @@
+@import '../../../styles.scss';
+
+.operation-input-wrapper {
+    padding: 10px;
+
+    .typeahead-input {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            height: 35px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        .btn-outline-secondary {
+            width: 40px;
+            height: 35px;
+            border-radius: 0 8px 8px 0;
+            padding: 4px 9px;
+        }
+
+        ::ng-deep .dropdown-menu {
+            width: 400px;
+            max-height: 300px;
+            overflow: scroll;
+
+            .dropdown-item.active, .dropdown-item:active {
+                color: $white-color;
+                font-weight: 500;
+                text-decoration: none;
+                background-color: $orange-color;
+            }
+        }
+    }
+
+    .selectedValue-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .form-control {
+            width: 90%;
+            height: 35px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+
+            &:focus {
+                box-shadow: none;
+                border: none;
+            }
+        }
+
+        .btn-outline-secondary {
+            font-size: .8rem;
+            width: 10%;
+            height: 35px;
+            padding: 4px 9px;
+            border-radius: 0 8px 8px 0;
+
+            &:hover {
+                background-color: $danger-color;
+            }
+        }
+    }
+}

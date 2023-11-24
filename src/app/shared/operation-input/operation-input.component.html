@@ -1,26 +1,35 @@
-<div class="operation-input-wrapper">
-    <input
-        id="typeahead-focus"
-        type="text"
-        class="form-control"
-        placeholder="Select operation"
-        [(ngModel)]="selectedParam"
-        (ngModelChange)="onSearchTextChanged($event)"
-        [ngbTypeahead]="search"
-        [inputFormatter]="formatter"
-        [resultFormatter]="formatter"
-        (focus)="focus$.next($any($event).target.value)"
-        (click)="click$.next($any($event).target.value)"
-        #paramsSearcher="ngbTypeahead"
-    />
-    <input 
-        type="text" 
-        name="possibleValues" 
-        id="possibleValues" 
-        placeholder="{{ paramPlaceholder }}"
-        [(ngModel)]="selectedValue"
-        (ngModelChange)="onInputValueChanged()"
-        style="width: 380px;"
-    />
-    <button (click)="onRemoveInputValue()">remove</button>
+<div class="operation-input-wrapper show-block-animation">
+    <div class="typeahead-input">
+        <input
+            id="typeahead-focus"
+            type="text"
+            class="form-control"
+            placeholder="Select operation"
+            [(ngModel)]="selectedParam"
+            (ngModelChange)="onSearchTextChanged($event)"
+            [ngbTypeahead]="search"
+            [inputFormatter]="formatter"
+            [resultFormatter]="formatter"
+            (focus)="focus$.next($any($event).target.value)"
+            (click)="click$.next($any($event).target.value)"
+            #paramsSearcher="ngbTypeahead"
+        />
+        <button type="button" class="btn btn-outline-secondary" placement="end" ngbTooltip="{{ paramDescription }}" [disabled]="!selectedParam">
+            <i *ngIf="selectedParam" class="bi bi-question-circle fadeIn-animation"></i>
+        </button>
+    </div>
+    <div class="selectedValue-wrapper mt-2">
+        <input 
+            type="text" 
+            name="possibleValues" 
+            id="possibleValues" 
+            class="form-control"
+            placeholder="{{ paramPlaceholder }}"
+            [(ngModel)]="selectedValue"
+            (ngModelChange)="onInputValueChanged()"
+        />
+        <button type="button" class="btn btn-outline-secondary" (click)="onRemoveInputValue()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
 </div>
